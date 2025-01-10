@@ -1,4 +1,4 @@
-import numpy as np
+import numpy as np 
 from neural_network import ThreeLayerNN
 
 # Create sample data
