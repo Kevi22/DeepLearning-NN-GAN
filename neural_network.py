@@ -1,12 +1,13 @@
 import numpy as np
 
 class ThreeLayerNN:
-    def __init__(self, input_dim=10, hidden_units=8, output_dim=1, learning_rate=0.01):
+    def __init__(self, input_dim=10, hidden_units=8, output_dim=1, learning_rate=0.01, clip_value=1.0):
         # Initialize network parameters
         self.input_dim = input_dim
         self.hidden_units = hidden_units
         self.output_dim = output_dim
         self.learning_rate = learning_rate
+        self.clip_value = clip_value
         
         # Initialize weights and biases
         # Input layer -> Hidden layer 1
@@ -71,6 +72,14 @@ class ThreeLayerNN:
         dZ1 = dA1 * self.relu_derivative(self.Z1)
         dW1 = (1/m) * np.dot(X.T, dZ1)
         db1 = (1/m) * np.sum(dZ1, axis=0, keepdims=True)
+
+        dW3 = np.clip(dW3, -self.clip_value, self.clip_value)
+        db3 = np.clip(db3, -self.clip_value, self.clip_value)
+        dW2 = np.clip(dW2, -self.clip_value, self.clip_value)
+        db2 = np.clip(db2, -self.clip_value, self.clip_value)
+        dW1 = np.clip(dW1, -self.clip_value, self.clip_value)
+        db1 = np.clip(db1, -self.clip_value, self.clip_value)
+
         
         # Update weights and biases
         self.W1 -= self.learning_rate * dW1
