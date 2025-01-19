@@ -1,1 +1,1 @@
-# Backpropagation-Visualizer
+# DeepLearning-NN-GAN
